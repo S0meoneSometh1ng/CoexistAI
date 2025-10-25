@@ -8,14 +8,9 @@ import { config } from './config.js';
 
 async function main() {
   try {
-    logger.info('🚀 Starting CoexistAI MCP Server...');
-
     // Initialize backend manager
     const backend = new BackendManager(config);
     
-    // Start backend services (Docker + FastAPI)
-    await backend.start();
-
     // Create MCP server
     const server = new McpServer({
       name: 'coexistai',
@@ -29,23 +24,12 @@ async function main() {
     const transport = new StdioServerTransport();
     await server.connect(transport);
 
-    logger.info('✅ CoexistAI MCP Server ready');
-
     // Graceful shutdown
-    process.on('SIGINT', async () => {
-      logger.info('🛑 Shutting down...');
-      await backend.stop();
-      process.exit(0);
-    });
-
-    process.on('SIGTERM', async () => {
-      logger.info('🛑 Shutting down...');
-      await backend.stop();
-      process.exit(0);
-    });
+    process.on('SIGINT', () => process.exit(0));
+    process.on('SIGTERM', () => process.exit(0));
 
   } catch (error) {
-    logger.error('❌ Failed to start server:', error);
+    process.stderr.write(`Failed to start: ${error}\n`);
     process.exit(1);
   }
 }

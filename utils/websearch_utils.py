@@ -14,9 +14,13 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed
 from functools import partial
-from langchain.docstore.document import Document
-from langchain.retrievers import ContextualCompressionRetriever, EnsembleRetriever
-from langchain.retrievers.document_compressors import CrossEncoderReranker
+from langchain_core.documents import Document
+try:
+    from langchain.retrievers import ContextualCompressionRetriever, EnsembleRetriever
+    from langchain.retrievers.document_compressors import CrossEncoderReranker
+except ImportError:
+    from langchain_classic.retrievers import ContextualCompressionRetriever, EnsembleRetriever
+    from langchain_classic.retrievers.document_compressors import CrossEncoderReranker
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.retrievers import BM25Retriever
 from langchain_community.utilities import SearxSearchWrapper

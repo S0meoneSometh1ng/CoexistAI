@@ -4,7 +4,10 @@ import asyncio
 import logging
 from concurrent.futures import ThreadPoolExecutor
 from langchain_community.vectorstores import Chroma
-from langchain.retrievers import EnsembleRetriever
+try:
+    from langchain.retrievers import EnsembleRetriever
+except ImportError:
+    from langchain_classic.retrievers import EnsembleRetriever
 from langchain_community.retrievers import BM25Retriever
 import chromadb
 from chromadb.config import Settings

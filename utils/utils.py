@@ -28,7 +28,7 @@ from langchain_openai import ChatOpenAI
 from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 from langchain_community.cross_encoders import HuggingFaceCrossEncoder
 from langchain_community.embeddings import InfinityEmbeddings
-from langchain.docstore.document import Document
+from langchain_core.documents import Document
 
 # Project imports
 from utils.config import *
